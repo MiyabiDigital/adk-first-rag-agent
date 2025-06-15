@@ -2,7 +2,6 @@
 # ライブラリのインポート
 # -----------------------------------------------------------------------------
 from google.adk.agents import Agent
-from openai import OpenAI
 from pathlib import Path
 import os
 import pickle
@@ -43,17 +42,22 @@ if USE_GOOGLE_GENAI:
         genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
     except ImportError:
         print("エラー: 'google.generativeai' パッケージが見つかりません。")
-        print("インストールしてください: pip install google-generativeai")
+        print("インストールしてください: uv add google-generativeai")
         exit()
     except Exception as e:
         print(f"エラー: Google Generative AI の初期化に失敗しました: {e}")
         exit()
 else:
     try:
+        from openai import OpenAI
         # 環境変数 `OPENAI_API_KEY` を使って認証します。
         if not os.getenv("OPENAI_API_KEY"):
             raise ValueError("環境変数 'OPENAI_API_KEY' が設定されていません。")
         openai_client = OpenAI()
+    except ImportError:
+        print("エラー: 'openai' パッケージが見つかりません。")
+        print("インストールしてください: uv add openai")
+        exit()
     except Exception as e:
         print(f"エラー: OpenAIクライアントの初期化に失敗しました: {e}")
         exit()
@@ -208,10 +212,10 @@ root_agent = Agent(
     model="gemini-2.0-flash",
     description="文書データベースに関する質問に日本語で回答するエージェントです。",
     instruction=(
-        "あなたは、与えられた文書データベースの内容に基づいて質問に回答するアシスタントです。\n"
-        "回答は、必ず `retrieve` ツールを使って検索した情報を根拠に作成してください。\n"
-        "特定のトピックについて質問された場合は、`retrieve` ツールを使用してください。\n"
-        "データベースにどのような情報があるか、といった曖昧な質問の場合は `get_random_chunks` ツールが役立つかもしれません。"
+        "あなたは、与えられた文書データベースの内容に基づいて質問に回答するアシスタントです。"
+        "回答は、必ず `retrieve` ツールを使って検索した情報を根拠に作成してください。"
+        "特定のトピックについて質問された場合は、`retrieve` ツールを使用してください。"
+        "データベースにどのような情報があるか、といった曖昧な質問の場合は `get_random_chunks` ツールを使用してください。"
     ),
     tools=[retrieve, get_random_chunks]
 )
