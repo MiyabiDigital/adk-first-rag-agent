@@ -1,6 +1,10 @@
 # ADKではじめる！RAGエージェント構築チュートリアル
 
-このドキュメントは、ADK (Agent Development Kit) を使用して、RAG (Retrieval Augmented Generation) の基本的な仕組みを学びながら、初めてのRAGエージェントを構築するためのチュートリアルです。
+ADK (Agent Development Kit) を使用して、RAG (Retrieval Augmented Generation) の基本的な仕組みを学びながら、初めてのRAGエージェントを構築するためのチュートリアル用コードです。
+
+本チュートリアルの解説動画は、以下のYouTubeチャンネルでご覧いただけます。
+
+- **YouTubeチャンネル:** [AI with Masa](https://www.youtube.com/@aiwithmasa)
 
 環境構築からエージェントの実行までをステップバイステップで説明します。
 
